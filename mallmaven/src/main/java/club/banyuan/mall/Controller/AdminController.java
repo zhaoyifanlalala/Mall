@@ -60,5 +60,5 @@ public class AdminController {
         }
     }
 
-    public CommonResult list(@RequestParam )
+    //public CommonResult list(@RequestParam )
 }
