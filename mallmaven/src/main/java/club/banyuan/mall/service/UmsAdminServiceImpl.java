@@ -1,11 +1,15 @@
 package club.banyuan.mall.service;
 import club.banyuan.mall.common.mapper.UmsAdminMapper;
-import club.banyuan.mall.common.model.UmsAdmin;
-import club.banyuan.mall.common.model.UmsAdminExample;
-import club.banyuan.mall.common.model.UmsResource;
+import club.banyuan.mall.common.mapper.UmsAdminRoleRelationMapper;
+import club.banyuan.mall.common.model.*;
 import club.banyuan.mall.common.utils.JwtTokenUtil;
 import club.banyuan.mall.config.security.AdminUserDetails;
+import club.banyuan.mall.dao.UmsAdminDao;
+import club.banyuan.mall.dao.param.AdminQueryParam;
 import club.banyuan.mall.dto.UmsAdminCreateParam;
+import club.banyuan.mall.dto.UmsAdminListResponse;
+import club.banyuan.mall.dto.UmsAdminRoleUpdateParam;
+import club.banyuan.mall.dto.UmsAdminUpdatePasswordParam;
 import club.banyuan.mall.exception.CommonException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -107,5 +111,73 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         adminMapper.insert(umsAdmin);
 
         // push message queue
+    }
+
+    @Autowired
+    private UmsAdminDao adminDao;
+    @Override
+    public UmsAdminListResponse list(AdminQueryParam param){
+        int limit = param.getPageSize();
+        int offset = (param.getPageNum() - 1) *limit;
+        param.setOffset(offset);
+
+        UmsAdminListResponse response = new UmsAdminListResponse();
+        response.setPageNum(param.getPageNum());
+        response.setPageSize(param.getPageSize());
+
+        int count = adminDao.count(param);
+        int totalPages = (count % limit > 0) ? (count / limit + 1) : count / limit; //三元表达式
+        response.setTotal(count); //总共多少条
+        response.setTotalPage(totalPages); //总共多少页
+
+        List<UmsAdmin> admins = adminDao.findManyByParam(param);
+        response.setList(admins);
+
+        return response;
+    }
+
+    @Override
+    public void updatePassword(UmsAdminUpdatePasswordParam param) throws CommonException{
+        String username = param.getUsername();
+        UmsAdmin admin = adminDao.findOneByUsername(username);
+        if (admin == null){
+            throw new CommonException("用户不存在");
+        }
+        if (passwordEncoder.matches(param.getNewPassword(), admin.getPassword())){
+            throw new CommonException("新密码不能与旧密码一样");
+        }
+        String newPasswordEncoded = passwordEncoder.encode(param.getNewPassword());
+        adminDao.updatePassword(admin.getId(), newPasswordEncoded);
+    }
+    @Autowired
+    private UmsAdminRoleRelationMapper adminRoleRelationMapper;
+
+    @Override
+    public void roleUpdate(UmsAdminRoleUpdateParam param) {
+
+        // 查出这个用户的现有角色
+        UmsAdminRoleRelationExample example = new UmsAdminRoleRelationExample();
+        example.createCriteria().andAdminIdEqualTo(param.getAdminId());
+        List<UmsAdminRoleRelation> relations = adminRoleRelationMapper.selectByExample(example);
+
+        List<Long> currentRoleIds = new ArrayList<>();
+
+        // 先做删除角色
+        for (UmsAdminRoleRelation relation : relations) {
+            if (!param.getRoleIds().contains(relation.getRoleId())) {
+                adminRoleRelationMapper.deleteByPrimaryKey(relation.getId());
+            }
+            currentRoleIds.add(relation.getRoleId());
+        }
+
+        // 添加角色
+        for (Long roleId : param.getRoleIds()) {
+            if (!currentRoleIds.contains(roleId)) {
+                UmsAdminRoleRelation relation = new UmsAdminRoleRelation();
+                relation.setAdminId(param.getAdminId());
+                relation.setRoleId(roleId);
+                adminRoleRelationMapper.insert(relation);
+            }
+        }
     }
 }

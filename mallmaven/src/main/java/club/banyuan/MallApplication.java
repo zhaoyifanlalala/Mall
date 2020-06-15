@@ -14,7 +14,6 @@ import java.util.Date;
 
 @SpringBootApplication
 @RestController
-@MapperScan({"club.banyuan.mall.common.mapper"})
 public class MallApplication {
     @Autowired
     private UmsRoleMapper roleMapper;
