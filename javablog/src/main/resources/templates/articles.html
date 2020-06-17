@@ -1,0 +1,14 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>博客列表页</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+
+<ul th:each="article : ${articles}">
+    <li><a th:href="'/article/'+${article}" th:text="${article}"></a></li>
+</ul>
+
+</body>
+</html>
