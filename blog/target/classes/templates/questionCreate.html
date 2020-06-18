@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>博客首页</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>创建问题</h1>
+            <form onsubmit="doSubmit();return false;">
+                <div class="form-group">
+                    <label for="title">问题标题</label>
+                    <input type="text" class="form-control" id="title">
+                </div>
+                <div class="form-group">
+                    <label for="tagIds">问题标签</label>
+                    <select class="form-control" id="tagIds" multiple>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="content">问题描述</label>
+                    <textarea name="content2" id="content" cols="30" rows="10" class="form-control"></textarea>
+                    <small id="emailHelp" class="form-text text-muted">输入问题内容或描述信息</small>
+                </div>
+                <button type="submit" class="btn btn-primary">提交</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/select2/4.0.13/js/select2.full.min.js"></script>
+<script>
+    function doSubmit() {
+        var data = {
+            title: $('#title').val(),
+            content: $('#content').val(),
+            tagIds: $('#tagIds').val()
+        };
+
+        $.ajax({
+            url: '/api/question/create',
+            method: 'POST',
+            contentType: "application/json;charset=utf-8",
+            data: JSON.stringify(data),
+            success: function (response) {
+                console.info(response);
+                window.location.href = '/';
+            },
+            error: function () {
+            }
+        });
+    }
+
+    $('#tagIds').select2({
+        ajax: {
+            url: '/api/tag/query',
+            dataType: 'json',
+            data: function (params) {
+                return {kw: params.term};
+            },
+            processResults: function (resp) {
+                var items = [];
+                resp.data.map(function (item) {
+                    items.push({
+                        id: item.id,
+                        text: item.label
+                    })
+                });
+                return {
+                    results: items
+                };
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

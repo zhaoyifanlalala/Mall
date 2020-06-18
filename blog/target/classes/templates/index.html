@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>博客首页</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>所有问题</h1>
+            <p th:if="${user} == null">
+                <a href="/login">登录</a>
+            </p>
+            <p th:if="${user} != null">
+                <span th:text="${user.getUsername()}"></span>
+                <a href="/logout">注销</a>
+            </p>
+            <p><a href="/question/create">创建问题</a></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3" th:each="question : ${questions}">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${question.getTitle()}"></h5>
+                    <!--/*@thymesVar id="getUser" type="club.banyuan.blog.model.User"*/-->
+                    <p class="card-text">
+                        <span th:text="${question.getUser().getUsername()}" class="badge badge-secondary"></span>
+                        <span th:text="${question.getCreatedAt()}"></span>
+                    </p>
+                    <a th:href="'/q/'+${question.getId()}" class="btn btn-primary">去回答问题</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
