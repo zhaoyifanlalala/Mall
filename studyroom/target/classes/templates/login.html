@@ -1,38 +1,56 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:include="~{inc/fragments :: header}">
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>自习室预订</title>
+    <link rel="stylesheet" href="/static/jquery-weui/lib/weui.min.css">
+    <link rel="stylesheet" href="/static/jquery-weui/css/jquery-weui.min.css">
+    <style>
+        .page-title {
+            text-align: center;
+            font-size: 34px;
+            color: #3cc51f;
+            font-weight: 400;
+            margin: 0 15%;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h2>登录</h2>
-            <p>
-                <a href="/">返回首页</a>
-                <a href="/register">注册</a>
-            </p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6">
-            <form onsubmit="doLogin();return false;">
-                <div class="form-group">
-                    <label for="username">用户名</label>
-                    <input type="text" class="form-control" id="username">
-                </div>
-                <div class="form-group">
-                    <label for="password">密码</label>
-                    <input type="password" class="form-control" id="password">
-                </div>
-                <button type="submit" class="btn btn-primary">登录</button>
-            </form>
+
+<header style="padding: 35px 0;">
+    <h1 class="page-title">登录</h1>
+</header>
+
+<div class="weui-cells__title">用户名/手机号</div>
+<div class="weui-cells">
+    <div class="weui-cell">
+        <div class="weui-cell__bd">
+            <input class="weui-input" type="text" id="username" placeholder="请输入用户名/手机号">
         </div>
     </div>
 </div>
+<div class="weui-cells__title">密码</div>
+<div class="weui-cells">
+    <div class="weui-cell">
+        <div class="weui-cell__bd">
+            <input class="weui-input" type="password" id="password" placeholder="请输入密码">
+        </div>
+    </div>
+</div>
+<div class="weui-btn-area">
+    <a href="javascript: doLogin();" class="weui-btn weui-btn_plain-primary">登录</a>
+    <a href="/" class="weui-btn weui-btn_plain-primary">返回</a>
+</div>
 
-<div th:replace="~{inc/fragments :: js}"></div>
+
+<script src="/static/jquery-3.3.1.min.js"></script>
+<script src="/static/jquery-weui/js/jquery-weui.min.js"></script>
 <script>
+
     function doLogin() {
+        //console.info("do login...");
         var data2 = {username: $('#username').val(), password: $('#password').val()};
         $.ajax({
             url: '/api/user/login',
@@ -41,7 +59,11 @@
             data: JSON.stringify(data2),
             success: function (resp) {
                 console.info(resp);
-                window.location.href = '/';
+                if (resp.code === 200) {
+                    window.location.href = '/';
+                } else {
+                    alert(resp.message);
+                }
             },
             error: function () {
             }

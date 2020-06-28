@@ -5,6 +5,7 @@ import club.banyuan.studyroom.mapper.UserMapper;
 import club.banyuan.studyroom.model.User;
 import club.banyuan.studyroom.model.UserExample;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +24,7 @@ public class UserController {
 
     @PostMapping(value = "/login")
     public CommonResult login(@RequestBody User user, HttpSession session){
+
         //获取用户是否存在
         UserExample example = new UserExample();
         example.createCriteria().andUsernameEqualTo(user.getUsername());
@@ -53,4 +55,11 @@ public class UserController {
         userMapper.insertSelective(user);
         return CommonResult.success("OK");
     }
+
+//    @PostMapping(value = "/current")
+//    public String getname(HttpSession session, Model model){
+//        User user = (User) session.getAttribute("user");
+//        model.addAttribute("user", user);
+//        return "OK";
+//    }
 }

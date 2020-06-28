@@ -16,8 +16,8 @@ public class IndexController {
 
     @GetMapping(value = "/")
     public String index(Model model, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        model.addAttribute("user", user);
+//        User user = (User) session.getAttribute("user");
+//        model.addAttribute("user", user);
         return "index";
     }
 
@@ -35,5 +35,39 @@ public class IndexController {
     public String demo(Model model, HttpSession session) {
         session.removeAttribute("user");
         return "forward:/";
+    }
+
+
+
+
+    @GetMapping("/studyroom/login")
+    public String studyRoomLogin() {
+        return "/login";
+    }
+
+    @GetMapping("/studyroom/register")
+    public String studyRoomRegister() {
+        return "/register";
+    }
+
+
+    @GetMapping("/studyroom/index")
+    public String studyRoomIndex() {
+        return "/index";
+    }
+
+    @GetMapping("/studyroom/book")
+    public String studyRoomBook() {
+        return "/book";
+    }
+
+    @GetMapping("/studyroom/history")
+    public String studyRoomHistory() {
+        return "/history";
+    }
+
+    @GetMapping("/studyroom/admin")
+    public String studyRoomAdmin() {
+        return "/admin";
     }
 }

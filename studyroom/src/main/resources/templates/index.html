@@ -1,43 +1,100 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<!doctype html>
+<html lang="en" xmlns:text="http://www.w3.org/1999/xhtml">
 <head>
-    <title>博客首页</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>自习室预订</title>
+    <link rel="stylesheet" href="/static/jquery-weui/lib/weui.min.css">
+    <link rel="stylesheet" href="/static/jquery-weui/css/jquery-weui.min.css">
+
+    <script src="/static/jquery-3.3.1.min.js"></script>
+    <script src="/static/jquery-weui/js/jquery-weui.min.js"></script>
+    <style>
+        .page-title {
+            text-align: center;
+            font-size: 34px;
+            color: #3cc51f;
+            font-weight: 400;
+            margin: 0 15%;
+        }
+    </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h2>欢迎来到自习室学习</h2>
-            <p th:if="${user} == null">
-                <a href="/login">登录</a>
-                <a href="/register">注册</a>
-            </p>
-            <p th:if="${user} != null">
-                <span th:text="${user.getUsername()}"></span>
-                <span th:text="${user.getPhone()}"></span>
-                <a href="/logout">注销</a>
-            </p>
-<!--            <p><a href="/question/create">创建问题</a></p>-->
-        </div>
+<header style="padding: 35px 0;">
+    <h1 class="page-title">自习室预约</h1>
+</header>
+<div>
+    <div>
+        <span id="welcomeText"></span>
     </div>
-<!--    <div class="row">-->
-<!--        <div class="col-3" th:each="question : ${questions}">-->
-<!--            <div class="card">-->
-<!--                <div class="card-body">-->
-<!--                    <h5 class="card-title" th:text="${question.getTitle()}"></h5>-->
-<!--                    &lt;!&ndash;/*@thymesVar id="getUser" type="club.banyuan.blog.model.User"*/&ndash;&gt;-->
-<!--                    <p class="card-text">-->
-<!--                        <span th:text="${question.getUser().getUsername()}" class="badge badge-secondary"></span>-->
-<!--                        <span th:text="${question.getCreatedAt()}"></span>-->
-<!--                    </p>-->
-<!--                    <a th:href="'/q/'+${question.getId()}" class="btn btn-primary">去回答问题</a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
 </div>
+
+
+<div class="weui-grids">
+    <a href="/studyroom/book" class="weui-grid js_grid">
+        <div class="weui-grid__icon">
+            <img src="/static/img/booking.png" alt="">
+        </div>
+        <p class="weui-grid__label">
+            立即预约
+        </p>
+    </a>
+    <a href="/studyroom/history" class="weui-grid js_grid">
+        <div class="weui-grid__icon">
+            <img src="/static/img/history.png" alt="">
+        </div>
+        <p class="weui-grid__label">
+            预约历史
+        </p>
+    </a>
+
+    <a href="javascript: showAbout();" class="weui-grid js_grid">
+        <div class="weui-grid__icon">
+            <img src="/static/img/info.png" alt="">
+        </div>
+        <p class="weui-grid__label">
+            关于我们
+        </p>
+    </a>
+
+    <a href="/studyroom/login" class="weui-grid js_grid">
+        <div class="weui-grid__icon">
+            <img src="/static/img/logout.png" alt="">
+        </div>
+        <p class="weui-grid__label">
+            登录
+        </p>
+    </a>
+    <a href="/studyroom/register" class="weui-grid js_grid">
+        <div class="weui-grid__icon">
+            <img src="/static/img/login.png" alt="">
+        </div>
+        <p class="weui-grid__label">
+            注册
+        </p>
+    </a>
+    <a href="/studyroom/index" class="weui-grid js_grid">
+        <div class="weui-grid__icon">
+            <img src="/static/img/info.png" alt="">
+        </div>
+        <p class="weui-grid__label">
+            注销登录
+        </p>
+    </a>
+</div>
+
+<script>
+    function showAbout() {
+        $.alert('自习室预订系统 V1.0', '关于');
+    }
+
+    // $(document).ready(function () {
+    //     $.get('/api/user/current', function(resp){
+    //         $('#welcomeText').html('欢迎 '+resp.data.username+' 登录');
+    //     })
+    // });
+</script>
 </body>
 </html>
