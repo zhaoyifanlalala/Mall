@@ -3,10 +3,13 @@
 /Users/edz/Desktop/zhouu/qa/studyroom/src/main/java/club/banyuan/studyroom/controller/api/UserController.java
 /Users/edz/Desktop/zhouu/qa/studyroom/src/main/java/club/banyuan/studyroom/common/IErrorCode.java
 /Users/edz/Desktop/zhouu/qa/studyroom/src/main/java/club/banyuan/studyroom/model/Books.java
+/Users/edz/Desktop/zhouu/qa/studyroom/src/main/java/club/banyuan/studyroom/controller/api/AdminController.java
 /Users/edz/Desktop/zhouu/qa/studyroom/src/main/java/club/banyuan/studyroom/model/User.java
+/Users/edz/Desktop/zhouu/qa/studyroom/src/main/java/club/banyuan/studyroom/dto/AdminBooks.java
 /Users/edz/Desktop/zhouu/qa/studyroom/src/main/java/club/banyuan/studyroom/exception/CommonException.java
 /Users/edz/Desktop/zhouu/qa/studyroom/src/main/java/club/banyuan/studyroom/model/BooksExample.java
 /Users/edz/Desktop/zhouu/qa/studyroom/src/main/java/club/banyuan/studyroom/mapper/BooksMapper.java
+/Users/edz/Desktop/zhouu/qa/studyroom/src/main/java/club/banyuan/studyroom/controller/api/HistoryController.java
 /Users/edz/Desktop/zhouu/qa/studyroom/src/main/java/club/banyuan/studyroom/common/ResultCode.java
 /Users/edz/Desktop/zhouu/qa/studyroom/src/main/java/club/banyuan/studyroom/model/Seat.java
 /Users/edz/Desktop/zhouu/qa/studyroom/src/main/java/club/banyuan/studyroom/mapper/UserMapper.java

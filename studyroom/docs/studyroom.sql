@@ -11,7 +11,8 @@ CREATE TABLE `user`
     `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = `utf8mb4` AUTO_INCREMENT = 20201001 COMMENT ='用户表';
-
+insert `user` (`username`, `password`,`role`)
+VALUES ('admin', 'admin1234','1');
 CREATE TABLE `seat`
 (
     `id`         INT(10)    NOT NULL AUTO_INCREMENT,

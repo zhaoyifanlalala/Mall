@@ -70,4 +70,19 @@ public class IndexController {
     public String studyRoomAdmin() {
         return "/admin";
     }
+
+    @GetMapping("/studyroom/admin/records")
+    public String studyRoomAdminRecords() {
+        return "/adminRecords";
+    }
+
+    @GetMapping("/studyroom/admin/positions")
+    public String studyRoomAdminPositions() {
+        return "/adminPositions";
+    }
+
+    @GetMapping("/studyroom/admin/login")
+    public String studyRoomAdminLogin() {
+        return "/adminLogin";
+    }
 }
